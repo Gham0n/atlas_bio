@@ -23,11 +23,6 @@ import com.google.firebase.auth.AuthResult;
 
 public class FirstFragment extends Fragment {
 
-    private EditText editTextEmail;
-    private EditText editTextPassword;
-    private Button buttonLogin;
-
-    private FirebaseAuth firebaseAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,39 +34,10 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        editTextEmail = view.findViewById(R.id.editTextEmail);
-        editTextPassword = view.findViewById(R.id.editTextPassword);
-        buttonLogin = view.findViewById(R.id.buttonLogin);
 
 
-        FirebaseApp.initializeApp(getContext());
-        
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
 
-                // Authentification de l'utilisateur avec Firebase
-                firebaseAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // L'authentification a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions ici.
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    // Exemple de redirection vers un autre fragment
-                                    Toast.makeText(getContext(), "9A MARCHE !!!!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // L'authentification a échoué, affichez un message d'erreur.
 
-                                    Toast.makeText(getContext(), "ERREUR C4EST FZUX", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            }
-        });
     }
 }
