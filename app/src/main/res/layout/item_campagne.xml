@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:backgroundTint="@color/color_coral"
+    android:orientation="vertical"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Titre de la campagne"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/textViewDateIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date de début: 01/01/2023"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewDateOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date de fin: 31/01/2023"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description de la campagne..."
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/textViewGPS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Position GPS: Latitude: 12.345, Longitude: 67.890"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
