@@ -25,6 +25,8 @@ public class Authentification extends Fragment {
     private EditText editTextPassword;
     private Button buttonLogin;
 
+    private Button buttonSignUp;
+
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -40,35 +42,67 @@ public class Authentification extends Fragment {
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextPassword = view.findViewById(R.id.editTextPassword);
         buttonLogin = view.findViewById(R.id.buttonLogin);
-
+        buttonSignUp = view.findViewById(R.id.buttonSignUp);
 
         FirebaseApp.initializeApp(getContext());
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+                if(email == null || password == null) Toast.makeText(getContext(),"Veuillez remplir les champs", Toast.LENGTH_SHORT).show();
+                else {
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // L'inscription a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions ici.
+                                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                                        Toast.makeText(getContext(), "Inscription réussie!", Toast.LENGTH_SHORT).show();
+
+                                        // Ajoutez ici le code pour rediriger l'utilisateur vers une autre activité ou effectuer d'autres actions après l'inscription réussie.
+                                    } else {
+                                        // L'inscription a échoué, affichez un message d'erreur.
+                                        Toast.makeText(getContext(), "Erreur lors de l'inscription: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+
+            }
+        });
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
+                if(email == null || password == null)
+                    Toast.makeText(getContext(),"Veuillez remplir les champs", Toast.LENGTH_SHORT).show();
+                else {
+                    // Authentification de l'utilisateur avec Firebase
+                    firebaseAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // L'authentification a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions ici.
+                                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                                        // Exemple de redirection vers un autre fragment
+                                        Toast.makeText(getContext(), "Faire action !!!!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // L'authentification a échoué, affichez un message d'erreur.
 
-                // Authentification de l'utilisateur avec Firebase
-                firebaseAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // L'authentification a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions ici.
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    // Exemple de redirection vers un autre fragment
-                                    Toast.makeText(getContext(), "Faire action !!!!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // L'authentification a échoué, affichez un message d'erreur.
-
-                                    Toast.makeText(getContext(), "Nom d'utilisateur ou mot de passe faux", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Nom d'utilisateur ou mot de passe faux", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
     }
