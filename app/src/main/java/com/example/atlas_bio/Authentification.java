@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,8 +56,10 @@ public class Authentification extends Fragment {
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
-                if(email == null || password == null) Toast.makeText(getContext(),"Veuillez remplir les champs", Toast.LENGTH_SHORT).show();
-                else {
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(getContext(), "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+                } else {
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -72,9 +77,10 @@ public class Authentification extends Fragment {
                                 }
                             });
                 }
-
             }
         });
+
+
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +88,7 @@ public class Authentification extends Fragment {
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
-                if(email == null || password == null)
+                if (email.isEmpty() || password.isEmpty())
                     Toast.makeText(getContext(),"Veuillez remplir les champs", Toast.LENGTH_SHORT).show();
                 else {
                     // Authentification de l'utilisateur avec Firebase
@@ -93,8 +99,11 @@ public class Authentification extends Fragment {
                                     if (task.isSuccessful()) {
                                         // L'authentification a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions ici.
                                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                                        // Exemple de redirection vers un autre fragment
-                                        Toast.makeText(getContext(), "Faire action !!!!", Toast.LENGTH_SHORT).show();
+
+                                        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                                        navController.navigate(R.id.first_fragment);
+
                                     } else {
                                         // L'authentification a échoué, affichez un message d'erreur.
 
@@ -105,6 +114,8 @@ public class Authentification extends Fragment {
                 }
             }
         });
+
+
     }
 }
 

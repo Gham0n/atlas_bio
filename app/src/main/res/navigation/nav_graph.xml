@@ -10,4 +10,15 @@
         android:name="com.example.atlas_bio.Authentification"
         android:label="@string/authentificaion"
         tools:layout="@layout/auth"/>
+
+    <action
+        android:id="@+id/action_authentification_to_first_fragment"
+        app:destination="@id/first_fragment" />
+
+    <fragment
+        android:id="@+id/first_fragment"
+        android:name="com.example.atlas_bio.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first"/>
+
 </navigation>
