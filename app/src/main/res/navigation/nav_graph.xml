@@ -21,4 +21,15 @@
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first"/>
 
+    <action
+        android:id="@+id/first_fragment_to_ficheListFragment"
+        app:destination="@id/FicheListFragment"/>
+    <fragment
+        android:id="@+id/FicheListFragment"
+        android:name="com.example.atlas_bio.FragmentFicheList"
+        android:label="Fiche List Fragment"
+        tools:layout="@layout/fragment_fiche_list"/>
+
+
+
 </navigation>

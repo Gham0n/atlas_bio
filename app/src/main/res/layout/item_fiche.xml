@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="32dp"
+    android:backgroundTint="@color/color_cobalt_blue">
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewEspece"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Espèce: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/textViewCoordonneesGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coordonnées GPS: "
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/textViewDateHeure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date et Heure: "
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/textViewLieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lieu: "
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/textViewObservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Observation: "
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

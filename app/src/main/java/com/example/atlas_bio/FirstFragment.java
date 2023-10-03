@@ -7,17 +7,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.atlas_bio.Campagne;
-import com .example.atlas_bio.CampagneAdapter;
-import com.example.atlas_bio.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagneClickListener {
 
     private RecyclerView recyclerView;
     private CampagneAdapter campagneAdapter;
@@ -42,7 +40,15 @@ public class FirstFragment extends Fragment {
 
         // Configuration du RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        campagneAdapter = new CampagneAdapter(campagnes); // Assurez-vous de créer cet adaptateur personnalisé
+        campagneAdapter = new CampagneAdapter(campagnes, this);
         recyclerView.setAdapter(campagneAdapter);
+    }
+
+    @Override
+    public void onCampagneClick(int position) {
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+        navController.navigate(R.id.FicheListFragment);
     }
 }

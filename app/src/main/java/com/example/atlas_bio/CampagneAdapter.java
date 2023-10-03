@@ -11,9 +11,11 @@ import java.util.List;
 public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.CampagneViewHolder> {
 
     private List<Campagne> campagnes;
+    private OnCampagneClickListener campagneClickListener;
 
-    public CampagneAdapter(List<Campagne> campagnes) {
+    public CampagneAdapter(List<Campagne> campagnes, OnCampagneClickListener listener) {
         this.campagnes = campagnes;
+        this.campagneClickListener = listener;
     }
 
     @NonNull
@@ -33,11 +35,24 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
         holder.textViewDateOut.setText("Date de fin: " + campagne.getDateOut());
         holder.textViewDescription.setText(campagne.getDescription());
         holder.textViewGPS.setText("Position GPS: " + campagne.getPositionGPS());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (campagneClickListener != null) {
+                    campagneClickListener.onCampagneClick(position);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return campagnes.size();
+    }
+
+    public interface OnCampagneClickListener {
+        void onCampagneClick(int position);
     }
 
     public static class CampagneViewHolder extends RecyclerView.ViewHolder {

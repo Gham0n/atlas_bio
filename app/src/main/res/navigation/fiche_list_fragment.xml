@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fiche_list_fragment">
+
+
+    <fragment
+        android:id="@+id/FicheListFragment"
+        android:name="com.example.atlas_bio.FragmentFicheList"
+        android:label="Fiche List Fragment"
+        tools:layout="@layout/fragment_fiche_list"/>
+
+
+</navigation>
