@@ -44,6 +44,8 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
                 }
             }
         });
+
+
     }
 
     @Override

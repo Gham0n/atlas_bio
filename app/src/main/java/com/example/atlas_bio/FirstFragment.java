@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,7 +27,9 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewCampagne);
+
         return view;
+
     }
 
     @Override
@@ -42,7 +46,13 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         campagneAdapter = new CampagneAdapter(campagnes, this);
         recyclerView.setAdapter(campagneAdapter);
+
+
+        /
+
+
     }
+
 
     @Override
     public void onCampagneClick(int position) {
