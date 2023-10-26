@@ -30,6 +30,8 @@ public class Authentification extends Fragment {
 
     private Button buttonSignUp;
 
+
+
     private FirebaseAuth firebaseAuth;
 
     @Override

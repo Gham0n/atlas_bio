@@ -17,11 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagneClickListener {
 
     private RecyclerView recyclerView;
     private CampagneAdapter campagneAdapter;
     private List<Campagne> campagnes;
+
+    private Button btn_add_campagne;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,8 +50,20 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
         campagneAdapter = new CampagneAdapter(campagnes, this);
         recyclerView.setAdapter(campagneAdapter);
 
+        btn_add_campagne = view.findViewById(R.id.btnAddCampagne);
+        btn_add_campagne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        /
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                navController.navigate(R.id.addCampagne);
+
+            }
+
+        });
+
+
 
 
     }
