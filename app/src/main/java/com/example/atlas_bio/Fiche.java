@@ -1,6 +1,8 @@
 package com.example.atlas_bio;
 
-public class Fiche {
+import java.io.Serializable;
+
+public class Fiche implements Serializable {
 
 
     private String espece;
