@@ -14,6 +14,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AddCampagneFragment extends Fragment {
 
@@ -42,6 +44,9 @@ public class AddCampagneFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
+
         btn_ajouter_campagne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,12 +56,20 @@ public class AddCampagneFragment extends Fragment {
                 String description = editTextDescription.getText().toString().trim();
                 String gps = editTextGPS.getText().toString().trim();
 
-                // Ici, vous devrez enregistrer les données de la campagne dans Firebase ou dans votre base de données.
+                Campagne campagne = new Campagne(title, dateIn, dateOut, description, gps);
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference campagnesRef = database.getReference("campagnes");
+                campagnesRef.child(title).setValue(campagne);
+
 
                 // Après avoir ajouté la campagne, vous pouvez utiliser la navigation pour rediriger l'utilisateur vers une autre vue.
                 Toast.makeText(requireContext(), "Campagne ajoutée avec succès", Toast.LENGTH_SHORT).show();
 
-                // Vous pouvez également passer des données à la vue suivante en utilisant un Bundle si nécessaire.
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                navController.navigate(R.id.first_fragment);
+
             }
         });
         btn_return.setOnClickListener(new View.OnClickListener() {

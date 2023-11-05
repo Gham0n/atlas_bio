@@ -40,7 +40,16 @@
         android:label="addCampagne"
         tools:layout="@layout/add_camapgne"
         />
+    <action
+        android:id="@+id/ficheToAddFiche"
+        app:destination="@id/addFiche"/>
 
+    <fragment
+        android:id="@+id/addFiche"
+        android:name="com.example.atlas_bio.AddFicheFragment"
+        android:label="addFiche"
+        tools:layout="@layout/add_fiche"
+        />
 
 
 

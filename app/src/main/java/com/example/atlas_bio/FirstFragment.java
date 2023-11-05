@@ -54,8 +54,6 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
 
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("campagnes");
 
-
-
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,8 +86,6 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
 
 
 
-
-
         btn_add_campagne = view.findViewById(R.id.btnAddCampagne);
         btn_add_campagne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,17 +99,26 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
 
         });
 
-
-
-
     }
 
 
     @Override
     public void onCampagneClick(int position) {
 
+        // Supposons que vous avez cliqué sur la campagne à la position "position" dans votre liste
+        Campagne campagneSelectionnee = campagnes.get(position);
+        String nomCampagne = campagneSelectionnee.getTitre();
+
+
+        Bundle bundle = new Bundle();
+        bundle.putString("nomCampagne", nomCampagne);
+
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
 
-        navController.navigate(R.id.FicheListFragment);
+        navController.navigate(R.id.FicheListFragment,bundle);
+
+
+
+
     }
 }

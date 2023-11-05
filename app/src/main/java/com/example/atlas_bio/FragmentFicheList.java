@@ -1,13 +1,25 @@
 package com.example.atlas_bio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,46 +29,86 @@ public class FragmentFicheList extends Fragment {
     private FicheAdapter adapter;
     private List<Fiche> fiches;
 
+    private Button btn_add_fiche;
+
+    String TAG = "GUI";
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fiche_list, container, false);
-
         recyclerView = view.findViewById(R.id.recyclerViewFiche);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        fiches = new ArrayList<>(); // Initialisez votre liste de fiches ici
-        adapter = new FicheAdapter(fiches);
-        recyclerView.setAdapter(adapter);
-
-
-        // Ajoutez quelques fiches fictives à la liste
-        Fiche fiche1 = new Fiche();
-        fiche1.setEspece("Oiseau");
-        fiche1.setCoordoneesGPS("12.345, 67.890");
-        fiche1.setDate("2023-09-28");
-        fiche1.setHeure("14:30");
-        fiche1.setLieu("Parc");
-        fiche1.setObservation("Observation d'un oiseau rare.");
-
-        Fiche fiche2 = new Fiche();
-        fiche2.setEspece("Papillon");
-        fiche2.setCoordoneesGPS("45.678, 23.456");
-        fiche2.setDate("2023-09-29");
-        fiche2.setHeure("10:00");
-        fiche2.setLieu("Jardin botanique");
-        fiche2.setObservation("Observation d'un papillon coloré.");
-
-        // Ajoutez d'autres fiches fictives au besoin
-
-        // Ajoutez les fiches à la liste
-        fiches.add(fiche1);
-        fiches.add(fiche2);
-
-        adapter = new FicheAdapter(fiches);
-        recyclerView.setAdapter(adapter);
-
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fiches = new ArrayList<>();
+
+        String nomCampagne = getArguments().getString("nomCampagne");
+        Log.d(TAG, "Nom de la campagne: " + nomCampagne);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String campagneId = nomCampagne;
+        DatabaseReference campagneRef = database.getReference("campagnes").child(campagneId).child("fiches");
+
+        campagneRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                fiches.clear(); // Effacez les données précédentes des fiches
+                for (DataSnapshot ficheSnapshot : dataSnapshot.getChildren()) {
+                    String espece = ficheSnapshot.child("espece").getValue(String.class);
+                    String date = ficheSnapshot.child("date").getValue(String.class);
+                    String heure = ficheSnapshot.child("heure").getValue(String.class);
+                    String lieu = ficheSnapshot.child("lieu").getValue(String.class);
+                    String observation = ficheSnapshot.child("observation").getValue(String.class);
+                    String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
+
+                    Fiche fiche = new Fiche();
+                    fiche.setEspece(espece);
+                    fiche.setDate(date);
+                    fiche.setHeure(heure);
+                    fiche.setLieu(lieu);
+                    fiche.setObservation(observation);
+                    fiche.setCoordoneesGPS(coordGPS);
+
+                    fiches.add(fiche);
+                }
+                adapter.notifyDataSetChanged(); // Informez l'adaptateur des changements
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Gérez les erreurs ici si nécessaire
+                Log.e(TAG, "Erreur Firebase : " + databaseError.getMessage());
+            }
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        adapter = new FicheAdapter(fiches);
+        recyclerView.setAdapter(adapter);
+
+        btn_add_fiche = view.findViewById(R.id.btnAddFiche);
+
+        btn_add_fiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("nomCampagne", nomCampagne);
+
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                navController.navigate(R.id.addFiche,bundle);
+
+            }
+
+        });
+
+
+
+    }
 }
-
-
