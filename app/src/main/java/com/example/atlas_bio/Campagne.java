@@ -15,6 +15,8 @@ public class Campagne {
         this.positionGPS = positionGPS;
     }
 
+    public Campagne(){};
+
 
 
 

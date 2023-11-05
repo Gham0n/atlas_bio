@@ -1,6 +1,7 @@
 package com.example.atlas_bio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +33,8 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
     private List<Campagne> campagnes;
 
     private Button btn_add_campagne;
+
+    String TAG = "GUI";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,14 +51,44 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
 
         // Initialisation des données de campagne (vous pouvez remplacer par vos données réelles)
         campagnes = new ArrayList<>();
-        campagnes.add(new Campagne("Campagne 1", "01/01/2023", "31/01/2023", "Description de la campagne 1", "Latitude: 12.345, Longitude: 67.890"));
-        campagnes.add(new Campagne("Campagne 2", "02/01/2023", "28/02/2023", "Description de la campagne 2", "Latitude: 12.456, Longitude: 68.901"));
-        // Ajoutez plus de campagnes si nécessaire
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("campagnes");
+
+
+
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Effacez les données précédentes des campagnes
+                campagnes.clear();
+
+                for (DataSnapshot campagneSnapshot : dataSnapshot.getChildren()) {
+                    Campagne campagne = campagneSnapshot.getValue(Campagne.class);
+                    if (campagne != null) {
+                        campagnes.add(campagne);
+                    }
+                }
+
+                // Mettez à jour le RecyclerView ou l'UI avec les campagnes récupérées
+                campagneAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Gérez l'erreur ici si nécessaire
+            }
+        });
+
+
 
         // Configuration du RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         campagneAdapter = new CampagneAdapter(campagnes, this);
         recyclerView.setAdapter(campagneAdapter);
+
+
+
+
 
         btn_add_campagne = view.findViewById(R.id.btnAddCampagne);
         btn_add_campagne.setOnClickListener(new View.OnClickListener() {
