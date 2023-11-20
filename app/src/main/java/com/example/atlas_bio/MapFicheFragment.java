@@ -13,9 +13,17 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MapFicheFragment extends Fragment {
 
     String coordonneeGPS;
+
+    float longitude;
+
+    float latitude;
 
     MapView map;
 
@@ -45,23 +53,24 @@ public class MapFicheFragment extends Fragment {
 
         IMapController mapController = map.getController();
         mapController.setZoom(9.5);
-        float latitude,longitude;
-        latitude = getLatitude();
-        longitude = getLongitude();
+        setCoordonnee();
         GeoPoint startPoint = new GeoPoint(latitude, longitude);
         mapController.setCenter(startPoint);
         return view;
     }
 
-    private float getLongitude() {
-        String label = "Longitude: ";
-        String part = this.coordonneeGPS.split(",")[1].split(label)[0];
-        return Float.parseFloat(part);
+    private void setCoordonnee() {
+        Pattern pattern = Pattern.compile("-?\\d+\\.-?\\d+");
+        Matcher matcher = pattern.matcher(this.coordonneeGPS);
+
+        if(matcher.find()) {
+            latitude = Float.parseFloat(matcher.group(0));
+        }
+        if(matcher.find()) {
+            longitude = Float.parseFloat(matcher.group(0));
+        }
+
     }
 
-    private float getLatitude() {
-        String label = "Latitude: ";
-        String part = this.coordonneeGPS.split(",")[0].split(label)[0];
-        return Float.parseFloat(part);
-    }
+
 }
