@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/Authentification">
+    app:startDestination="@id/first_fragment">
 
     <fragment
         android:id="@+id/Authentification"
@@ -40,6 +40,7 @@
         android:label="addCampagne"
         tools:layout="@layout/add_camapgne"
         />
+
     <action
         android:id="@+id/ficheToAddFiche"
         app:destination="@id/addFiche"/>
@@ -50,6 +51,18 @@
         android:label="addFiche"
         tools:layout="@layout/add_fiche"
         />
+
+    <fragment
+        android:id="@+id/MapFicheFragment"
+        android:name="com.example.atlas_bio.MapFicheFragment"
+        android:label="mapFiche"
+        tools:layout="@layout/map_fiche_fragment"
+    />
+
+    <action
+        android:id="@+id/ficheToMap"
+        app:destination="@id/MapFicheFragment"
+    />
 
 
 

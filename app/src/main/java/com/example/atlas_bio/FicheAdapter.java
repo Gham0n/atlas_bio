@@ -1,11 +1,14 @@
 package com.example.atlas_bio;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -35,6 +38,12 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
         holder.textViewLieu.setText("Lieu: " + fiche.getLieu());
         holder.textViewGPS.setText("Coordonées GPS: " + fiche.getCoordoneesGPS());
 
+        holder.itemView.setOnLongClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+            Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);
+            return true;
+        });
 
 
 
