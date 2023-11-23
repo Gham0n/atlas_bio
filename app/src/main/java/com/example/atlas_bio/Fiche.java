@@ -9,6 +9,7 @@ public class Fiche {
     private String heure;
     private String lieu;
     private String observation;
+    private String imageUrl;
 
     public Fiche() {
     }
@@ -19,6 +20,14 @@ public class Fiche {
         this.espece = espece;
     }
 
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public String getCoordoneesGPS() {
         return coordoneesGPS;
     }

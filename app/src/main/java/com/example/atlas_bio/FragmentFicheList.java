@@ -64,6 +64,7 @@ public class FragmentFicheList extends Fragment {
                     String lieu = ficheSnapshot.child("lieu").getValue(String.class);
                     String observation = ficheSnapshot.child("observation").getValue(String.class);
                     String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
+                    String imageUrl = ficheSnapshot.child("imageUrl").getValue(String.class);
 
                     Fiche fiche = new Fiche();
                     fiche.setEspece(espece);
@@ -72,6 +73,7 @@ public class FragmentFicheList extends Fragment {
                     fiche.setLieu(lieu);
                     fiche.setObservation(observation);
                     fiche.setCoordoneesGPS(coordGPS);
+                    fiche.setImageUrl(imageUrl);
 
                     fiches.add(fiche);
                 }
