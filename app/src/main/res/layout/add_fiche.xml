@@ -68,11 +68,28 @@
             android:layout_height="wrap_content"
             android:hint="Coordonnées GPS" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextImageUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Image Url" />
+
+
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/buttonAjouterFiche"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ajouter la fiche" />
+
+
 
     </LinearLayout>
 

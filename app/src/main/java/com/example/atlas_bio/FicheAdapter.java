@@ -1,5 +1,6 @@
 package com.example.atlas_bio;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,8 +46,16 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
         holder.textViewLieu.setText(fiche.getLieu());
         holder.textViewGPS.setText("");
 
-        if(fiche.getImageUrl() != null)
-            Picasso.get().load(fiche.getImageUrl()).into(holder.imageFiche);
+        Log.d("GUI","Url de l'image: '" + fiche.getImageUrl() + "'");
+        if (fiche.getImageUrl() != null && !TextUtils.isEmpty(fiche.getImageUrl())) {
+            try {
+                Picasso.get().load(fiche.getImageUrl()).into(holder.imageFiche);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Picasso.get().load(R.drawable.pokemon).into(holder.imageFiche);
+        }
 
     }
 
