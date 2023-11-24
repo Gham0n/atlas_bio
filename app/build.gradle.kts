@@ -54,6 +54,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation ("com.google.firebase:firebase-database:20.0.0")
+    implementation ("com.google.firebase:firebase-messaging:23.0.0")
     implementation ("com.squareup.picasso:picasso:2.71828")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
