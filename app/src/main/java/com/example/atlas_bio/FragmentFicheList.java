@@ -1,6 +1,7 @@
 package com.example.atlas_bio;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentFicheList extends Fragment {
+
+public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private FicheAdapter adapter;
     private List<Fiche> fiches;
+    String nomCampagne;
 
     private Button btn_add_fiche;
 
@@ -46,70 +49,90 @@ public class FragmentFicheList extends Fragment {
 
         fiches = new ArrayList<>();
 
-        String nomCampagne = getArguments().getString("nomCampagne");
-        Log.d(TAG, "Nom de la campagne: " + nomCampagne);
+        nomCampagne = getArguments().getString("nomCampagne");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String campagneId = nomCampagne;
-        DatabaseReference campagneRef = database.getReference("campagnes").child(campagneId).child("fiches");
+        // Vérifier si nomCampagne est nul ou vide avant de construire la référence de la base de données
+        if (!TextUtils.isEmpty(nomCampagne)) {
+            Log.d(TAG, "Nom de la campagne: " + nomCampagne);
 
-        campagneRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                fiches.clear(); // Effacez les données précédentes des fiches
-                for (DataSnapshot ficheSnapshot : dataSnapshot.getChildren()) {
-                    String espece = ficheSnapshot.child("espece").getValue(String.class);
-                    String date = ficheSnapshot.child("date").getValue(String.class);
-                    String heure = ficheSnapshot.child("heure").getValue(String.class);
-                    String lieu = ficheSnapshot.child("lieu").getValue(String.class);
-                    String observation = ficheSnapshot.child("observation").getValue(String.class);
-                    String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
-                    String imageUrl = ficheSnapshot.child("imageUrl").getValue(String.class);
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String campagneId = nomCampagne;
+            DatabaseReference campagneRef = database.getReference("campagnes").child(campagneId).child("fiches");
 
-                    Fiche fiche = new Fiche();
-                    fiche.setEspece(espece);
-                    fiche.setDate(date);
-                    fiche.setHeure(heure);
-                    fiche.setLieu(lieu);
-                    fiche.setObservation(observation);
-                    fiche.setCoordoneesGPS(coordGPS);
-                    fiche.setImageUrl(imageUrl);
+            campagneRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    fiches.clear(); // Effacez les données précédentes des fiches
+                    for (DataSnapshot ficheSnapshot : dataSnapshot.getChildren()) {
+                        String espece = ficheSnapshot.child("espece").getValue(String.class);
+                        String date = ficheSnapshot.child("date").getValue(String.class);
+                        String heure = ficheSnapshot.child("heure").getValue(String.class);
+                        String lieu = ficheSnapshot.child("lieu").getValue(String.class);
+                        String observation = ficheSnapshot.child("observation").getValue(String.class);
+                        String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
+                        String imageUrl = ficheSnapshot.child("imageUrl").getValue(String.class);
 
-                    fiches.add(fiche);
+                        Fiche fiche = new Fiche();
+                        fiche.setEspece(espece);
+                        fiche.setDate(date);
+                        fiche.setHeure(heure);
+                        fiche.setLieu(lieu);
+                        fiche.setObservation(observation);
+                        fiche.setCoordoneesGPS(coordGPS);
+                        fiche.setImageUrl(imageUrl);
+
+                        fiches.add(fiche);
+                    }
+                    adapter.notifyDataSetChanged(); // Informez l'adaptateur des changements
                 }
-                adapter.notifyDataSetChanged(); // Informez l'adaptateur des changements
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Gérez les erreurs ici si nécessaire
-                Log.e(TAG, "Erreur Firebase : " + databaseError.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Gérez les erreurs ici si nécessaire
+                    Log.e(TAG, "Erreur Firebase : " + databaseError.getMessage());
+                }
+            });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new FicheAdapter(fiches);
-        recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            adapter = new FicheAdapter(fiches);
+            adapter.setOnItemClickListener(this); // Définir le gestionnaire de clics
+            recyclerView.setAdapter(adapter);
 
-        btn_add_fiche = view.findViewById(R.id.btnAddFiche);
+            btn_add_fiche = view.findViewById(R.id.btnAddFiche);
 
-        btn_add_fiche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            btn_add_fiche.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("nomCampagne", nomCampagne);
+
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.addFiche, bundle);
+                }
+            });
+        } else {
+            Log.e(TAG, "Nom de la campagne est nul ou vide");
+        }
+    }
+
+
+    // Implémentation de l'interface OnItemClickListener
+    @Override
+    public void onItemClick(String imageUrl) {
+        Bundle bundle = new Bundle();
+        bundle.putString("imageURL", imageUrl);
+        bundle.putString("nomCampagne", nomCampagne);
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
 
 
 
-                Bundle bundle = new Bundle();
-                bundle.putString("nomCampagne", nomCampagne);
 
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
 
-                navController.navigate(R.id.addFiche,bundle);
+        ImageFullScreenFragment imageFullScreenFragment = ImageFullScreenFragment.newInstance(imageUrl);
 
-            }
 
-        });
-
+        navController.navigate(R.id.image_full_screen, imageFullScreenFragment.getArguments());
 
 
     }

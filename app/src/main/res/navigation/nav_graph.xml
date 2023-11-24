@@ -51,6 +51,17 @@
         tools:layout="@layout/add_fiche"
         />
 
+    <action
+        android:id="@+id/ficheToFullScreen"
+        app:destination="@id/image_full_screen"/>
+
+    <fragment
+        android:id="@+id/image_full_screen"
+        android:name="com.example.atlas_bio.ImageFullScreenFragment"
+        android:label="ImageFullScreen"
+        tools:layout="@layout/dialog_image_preview"/>
+
+
 
 
 </navigation>
