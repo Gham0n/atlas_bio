@@ -59,7 +59,8 @@ public class MapFicheFragment extends Fragment {
         String[] permissions = {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.INTERNET
+                Manifest.permission.INTERNET,
+                Manifest.permission.READ_MEDIA_IMAGES
         };
 
         if (!checkMultiplePermissions(requireContext(),permissions)) {
@@ -104,9 +105,9 @@ public class MapFicheFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean isPerm = true;
+        boolean isPerm = (grantResults[0] == 1 && grantResults[2] == 1) && (grantResults[1] == 1 || grantResults[3] == 1);
 
-        if (requestCode == REQUEST_CODE_PERMISSION) {
+        /*if (requestCode == REQUEST_CODE_PERMISSION) {
             if(grantResults.length > 0) {
                 for (int grantResult : grantResults) {
                     if (grantResult != PackageManager.PERMISSION_GRANTED) {
@@ -118,7 +119,7 @@ public class MapFicheFragment extends Fragment {
             }
         } else {
             isPerm = false;
-        }
+        }*/
 
         if(isPerm) {
             File osmdroidTilesDirectory = new File("/storage/emulated/0/osmdroid/tiles");
