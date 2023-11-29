@@ -13,16 +13,23 @@ public class Fiche implements Serializable {
     private String observation;
     private String imageUrl;
 
+    private  String idCreator;
+
+
+
     public Fiche() {
     }
-
-
-
     public Fiche(String espece) {
         this.espece = espece;
     }
 
+    public String getIdCreator() {
+        return idCreator;
+    }
 
+    public void setIdCreator(String idCreator) {
+        this.idCreator = idCreator;
+    }
     public String getImageUrl() {
         return imageUrl;
     }

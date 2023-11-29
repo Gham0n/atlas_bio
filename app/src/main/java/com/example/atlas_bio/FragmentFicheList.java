@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,6 +60,10 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             String campagneId = nomCampagne;
             DatabaseReference campagneRef = database.getReference("campagnes").child(campagneId).child("fiches");
+
+            TextView titreLayout = view.findViewById(R.id.titreFicheList);
+            titreLayout.setText(nomCampagne);
+
 
             campagneRef.addValueEventListener(new ValueEventListener() {
                 @Override

@@ -15,6 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -58,7 +60,12 @@ public class AddCampagneFragment extends Fragment {
                     String description = editTextDescription.getText().toString().trim();
                     String gps = editTextGPS.getText().toString().trim();
 
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String userId = user.getUid();
+
                     Campagne campagne = new Campagne(title, dateIn, dateOut, description, gps);
+                    campagne.setIdCreator(userId);
+
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference campagnesRef = database.getReference("campagnes");

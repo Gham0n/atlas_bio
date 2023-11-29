@@ -16,14 +16,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getNotification() != null) {
-            // Gérer les données de notification ici
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        Log.d(TAG, "Message received: " + remoteMessage.getData());
+
+        if (remoteMessage.getData().size() > 0) {
+            // Gérer les données de la notification
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
+            // Traiter les données de la notification ici
+            String newCampaignTitle = remoteMessage.getData().get("titre");
 
             // Afficher la notification
-            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+            sendNotification("Nouvelle campagne ajoutée", "Titre : " + newCampaignTitle);
         }
     }
+
 
     private void sendNotification(String title, String messageBody) {
         // Utilisez NotificationManager et NotificationCompat pour afficher la notification
@@ -43,3 +49,4 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0, notificationBuilder.build());
     }
 }
+

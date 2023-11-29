@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -62,6 +64,9 @@ public class AddFicheFragment extends Fragment {
                     String coordGPS = editTextCoordGPS.getText().toString().trim();
                     String imageUrl = editTextImageUrl.getText().toString().trim();
 
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String userId = user.getUid();
+
                     Fiche fiche = new Fiche();
 
                     fiche.setEspece(espece);
@@ -71,7 +76,7 @@ public class AddFicheFragment extends Fragment {
                     fiche.setHeure(heure);
                     fiche.setCoordoneesGPS(coordGPS);
                     fiche.setImageUrl(imageUrl);
-
+                    fiche.setIdCreator(userId);
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference campagneRef = database.getReference("campagnes").child(nomCampagne);
