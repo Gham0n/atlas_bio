@@ -1,6 +1,8 @@
 package com.example.atlas_bio;
 
-public class Fiche {
+import java.io.Serializable;
+
+public class Fiche implements Serializable {
 
 
     private String espece;
@@ -9,16 +11,32 @@ public class Fiche {
     private String heure;
     private String lieu;
     private String observation;
+    private String imageUrl;
+
+    private  String idCreator;
+
+
 
     public Fiche() {
     }
-
-
-
     public Fiche(String espece) {
         this.espece = espece;
     }
 
+    public String getIdCreator() {
+        return idCreator;
+    }
+
+    public void setIdCreator(String idCreator) {
+        this.idCreator = idCreator;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public String getCoordoneesGPS() {
         return coordoneesGPS;
     }

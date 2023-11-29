@@ -50,12 +50,32 @@
         android:label="addFiche"
         tools:layout="@layout/add_fiche"
         />
+  
+    <fragment
+        android:id="@+id/user_profile"
+        android:name="com.example.atlas_bio.UserProfile"
+        android:label="UserProfile"
+        tools:layout="@layout/user_profile" />
+    <action
+        android:id="@+id/ficheToFullScreen"
+        app:destination="@id/image_full_screen"/>
 
     <fragment
-            android:id="@+id/user_profile"
-            android:name="com.example.atlas_bio.UserProfile"
-            android:label="UserProfile"
-            tools:layout="@layout/user_profile" />
+        android:id="@+id/image_full_screen"
+        android:name="com.example.atlas_bio.ImageFullScreenFragment"
+        android:label="ImageFullScreen"
+        tools:layout="@layout/dialog_image_preview"/>
+
+    <fragment
+        android:id="@+id/fiche_detail"
+        android:name="com.example.atlas_bio.FragmentFicheDetails"
+        android:label="FicheDetailFragment"
+        tools:layout="@layout/fragment_fiche_detail"
+        />
+    <action
+        android:id="@+id/ficheList_To_FicheDetail"
+        app:destination="@id/fiche_detail"
+    />
 
 
 </navigation>

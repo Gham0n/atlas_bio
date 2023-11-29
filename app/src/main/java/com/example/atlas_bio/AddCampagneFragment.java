@@ -1,6 +1,7 @@
 package com.example.atlas_bio;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,25 +53,36 @@ public class AddCampagneFragment extends Fragment {
         btn_ajouter_campagne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = editTextTitle.getText().toString().trim();
-                String dateIn = editTextDateIn.getText().toString().trim();
-                String dateOut = editTextDateOut.getText().toString().trim();
-                String description = editTextDescription.getText().toString().trim();
-                String gps = editTextGPS.getText().toString().trim();
+                if (!TextUtils.isEmpty(editTextTitle.getText().toString().trim())) {
+                    String title = editTextTitle.getText().toString().trim();
+                    String dateIn = editTextDateIn.getText().toString().trim();
+                    String dateOut = editTextDateOut.getText().toString().trim();
+                    String description = editTextDescription.getText().toString().trim();
+                    String gps = editTextGPS.getText().toString().trim();
 
-                Campagne campagne = new Campagne(title, dateIn, dateOut, description, gps);
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String userId = user.getUid();
 
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference campagnesRef = database.getReference("campagnes");
-                campagnesRef.child(title).setValue(campagne);
+                    Campagne campagne = new Campagne(title, dateIn, dateOut, description, gps);
+                    campagne.setIdCreator(userId);
 
 
-                // Après avoir ajouté la campagne, vous pouvez utiliser la navigation pour rediriger l'utilisateur vers une autre vue.
-                Toast.makeText(requireContext(), "Campagne ajoutée avec succès", Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference campagnesRef = database.getReference("campagnes");
+                    campagnesRef.child(title).setValue(campagne);
 
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
 
-                navController.navigate(R.id.first_fragment);
+                    // Après avoir ajouté la campagne, vous pouvez utiliser la navigation pour rediriger l'utilisateur vers une autre vue.
+                    Toast.makeText(requireContext(), "Campagne ajoutée avec succès", Toast.LENGTH_SHORT).show();
+
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+
+                    navController.navigate(R.id.first_fragment);
+                }
+                else
+                {
+                    Toast.makeText(requireContext(), "Le nom de la campagne est vide ", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
