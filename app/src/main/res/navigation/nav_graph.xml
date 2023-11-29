@@ -51,6 +51,11 @@
         tools:layout="@layout/add_fiche"
         />
 
+    <fragment
+            android:id="@+id/user_profile"
+            android:name="com.example.atlas_bio.UserProfile"
+            android:label="UserProfile"
+            tools:layout="@layout/user_profile" />
 
 
 </navigation>
