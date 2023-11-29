@@ -136,6 +136,8 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
                 bundle.putString("heure", selectedFiche.getHeure());
                 bundle.putString("lieu", selectedFiche.getLieu());
                 bundle.putString("observation", selectedFiche.getObservation());
+                bundle.putString("imageUrl", selectedFiche.getImageUrl());
+
 
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.ficheList_To_FicheDetail,bundle);

@@ -21,6 +21,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Authentification extends Fragment {
 
@@ -30,7 +32,7 @@ public class Authentification extends Fragment {
 
     private Button buttonSignUp;
 
-
+    private EditText editTextName;
 
     private FirebaseAuth firebaseAuth;
 
@@ -46,6 +48,7 @@ public class Authentification extends Fragment {
 
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextPassword = view.findViewById(R.id.editTextPassword);
+        editTextName = view.findViewById(R.id.editTextName);
         buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonSignUp = view.findViewById(R.id.buttonSignUp);
 
@@ -58,8 +61,13 @@ public class Authentification extends Fragment {
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
+                String name = editTextName.getText().toString();
 
-                if (email.isEmpty() || password.isEmpty()) {
+                if(name.isEmpty() && editTextName.getVisibility() == View.GONE) {
+                    editTextName.setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(), "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+                }
+                if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
                     Toast.makeText(getContext(), "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
                 } else {
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -69,6 +77,14 @@ public class Authentification extends Fragment {
                                     if (task.isSuccessful()) {
                                         // L'inscription a réussi, vous pouvez rediriger l'utilisateur ou effectuer d'autres actions ici.
                                         FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                                        User user1 = new User(name,email,user.getUid());
+
+                                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                        DatabaseReference usersRef = database.getReference("users");
+                                        usersRef.child(user.getUid()).setValue(user1);
+
+
                                         Toast.makeText(getContext(), "Inscription réussie!", Toast.LENGTH_SHORT).show();
 
                                         // Ajoutez ici le code pour rediriger l'utilisateur vers une autre activité ou effectuer d'autres actions après l'inscription réussie.
@@ -90,6 +106,13 @@ public class Authentification extends Fragment {
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
+
+                if ( editTextName.getVisibility() == View.VISIBLE)
+                {
+                    editTextName.setVisibility(View.GONE);
+                    editTextName.setText("");
+                }
+
                 if (email.isEmpty() || password.isEmpty())
                     Toast.makeText(getContext(),"Veuillez remplir les champs", Toast.LENGTH_SHORT).show();
                 else {
