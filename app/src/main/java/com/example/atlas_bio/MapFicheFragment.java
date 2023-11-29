@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,10 +124,16 @@ public class MapFicheFragment extends Fragment {
         }*/
 
         if(isPerm) {
-            File osmdroidTilesDirectory = new File("/storage/emulated/0/osmdroid/tiles");
+            org.osmdroid.config.IConfigurationProvider osmConf = org.osmdroid.config.Configuration.getInstance();
+            File basePath = new File(Environment.getStorageDirectory(), "osmdroid");
+            osmConf.setOsmdroidBasePath(basePath);
+            File tileCache = new File(osmConf.getOsmdroidBasePath().getAbsolutePath(), "tiles");
+            osmConf.setOsmdroidTileCache(tileCache);
+
+            /*File osmdroidTilesDirectory = new File("/storage/emulated/0/osmdroid/tiles");
             if (!osmdroidTilesDirectory.exists()) {
-                osmdroidTilesDirectory.mkdirs();
-            }
+                osmdroidTilesDirectory.mkdir();
+            }*/
             initializeMap();
         }
     }
