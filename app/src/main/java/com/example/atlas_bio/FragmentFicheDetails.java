@@ -27,7 +27,7 @@ public class FragmentFicheDetails extends Fragment {
             String lieu = bundle.getString("lieu", "");
             String observation = bundle.getString("observation", "");
             String imageUrl = bundle.getString("imageUrl");
-            if (imageUrl.isEmpty())imageUrl = "error";
+            if (imageUrl.isEmpty())imageUrl = "error"; // for fix bug
 
             // Récupérez les TextViews du layout.
             TextView title = view.findViewById(R.id.textView);
