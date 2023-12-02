@@ -81,7 +81,7 @@ public class FragmentFicheDetails extends Fragment {
             public void onClick(View v) {
 
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.ficheDetailToAddComment);
+                navController.navigate(R.id.ficheDetailToAddComment,bundle);
 
             }
         });

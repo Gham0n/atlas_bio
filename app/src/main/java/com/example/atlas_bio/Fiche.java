@@ -1,6 +1,10 @@
 package com.example.atlas_bio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Fiche implements Serializable {
 
@@ -15,11 +19,14 @@ public class Fiche implements Serializable {
 
     private  String idCreator;
 
-
+    private Map<String, Comment> comments;
 
     public Fiche() {
+        this.comments = new HashMap<>();
     }
     public Fiche(String espece) {
+
+        this.comments = new HashMap<>();
         this.espece = espece;
     }
 
@@ -83,5 +90,13 @@ public class Fiche implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public Map<String, Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Map<String, Comment> comments) {
+        this.comments = comments;
     }
 }

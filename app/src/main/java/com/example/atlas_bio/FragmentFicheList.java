@@ -129,6 +129,7 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
 
                 // Transmettez les détails de la fiche au fragment de détails.
                 Bundle bundle = new Bundle();
+                bundle.putString("nomCampagne", nomCampagne);
                 bundle.putString("espece", selectedFiche.getEspece());
                 bundle.putString("coordonnees", selectedFiche.getCoordoneesGPS());
                 bundle.putString("date", selectedFiche.getDate());

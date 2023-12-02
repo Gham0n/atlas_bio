@@ -1,6 +1,8 @@
 package com.example.atlas_bio;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment  {
 
     private String content ;
 
