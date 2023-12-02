@@ -49,16 +49,6 @@ public class FragmentFicheDetails extends Fragment {
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference().child("bird.jpg");
-/*
-            storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                // Utilisez l'URL pour charger l'image avec Picasso
-                String Url = uri.toString();
-                Picasso.get().load(Url).error(R.drawable.pokemon).into(imageView);
-            }).addOnFailureListener(exception -> {
-                // Gestion des erreurs lors de la récupération de l'URL
-                Log.e("FirebaseStorage", "Erreur de récupération de l'URL : " + exception.getMessage());
-            });
-*/
 
             coordonneesTextView.setText("Coordonnées GPS : " + coordonnees);
             dateTextView.setText("Date : " + date);
