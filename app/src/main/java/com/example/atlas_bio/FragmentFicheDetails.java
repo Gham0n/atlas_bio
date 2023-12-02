@@ -45,11 +45,11 @@ public class FragmentFicheDetails extends Fragment {
             ImageView imageView = view.findViewById(R.id.imageDetails);
 
             title.setText(espece);
-            //Picasso.get().load(imageUrl).error(R.drawable.pokemon).into(imageView);
+            Picasso.get().load(imageUrl).error(R.drawable.pokemon).into(imageView);
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference().child("bird.jpg");
-
+/*
             storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 // Utilisez l'URL pour charger l'image avec Picasso
                 String Url = uri.toString();
@@ -58,7 +58,7 @@ public class FragmentFicheDetails extends Fragment {
                 // Gestion des erreurs lors de la récupération de l'URL
                 Log.e("FirebaseStorage", "Erreur de récupération de l'URL : " + exception.getMessage());
             });
-
+*/
 
             coordonneesTextView.setText("Coordonnées GPS : " + coordonnees);
             dateTextView.setText("Date : " + date);
