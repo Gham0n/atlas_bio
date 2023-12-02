@@ -1,6 +1,7 @@
 package com.example.atlas_bio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
 
 public class FragmentFicheDetails extends Fragment {
     private TextView espèceTextView, coordonnéesTextView, dateTextView, heureTextView, lieuTextView, observationTextView;
@@ -39,7 +45,21 @@ public class FragmentFicheDetails extends Fragment {
             ImageView imageView = view.findViewById(R.id.imageDetails);
 
             title.setText(espece);
-            Picasso.get().load(imageUrl).error(R.drawable.pokemon).into(imageView);
+            //Picasso.get().load(imageUrl).error(R.drawable.pokemon).into(imageView);
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference().child("bird.jpg");
+
+            storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                // Utilisez l'URL pour charger l'image avec Picasso
+                String Url = uri.toString();
+                Picasso.get().load(Url).error(R.drawable.pokemon).into(imageView);
+            }).addOnFailureListener(exception -> {
+                // Gestion des erreurs lors de la récupération de l'URL
+                Log.e("FirebaseStorage", "Erreur de récupération de l'URL : " + exception.getMessage());
+            });
+
+
             coordonneesTextView.setText("Coordonnées GPS : " + coordonnees);
             dateTextView.setText("Date : " + date);
             heureTextView.setText("Heure : " + heure);
