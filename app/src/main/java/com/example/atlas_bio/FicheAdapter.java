@@ -18,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -78,6 +79,8 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
     public int getItemCount() {
         return fiches.size();
     }
+
+
 
     public static class FicheViewHolder extends RecyclerView.ViewHolder {
         TextView textViewEspece;

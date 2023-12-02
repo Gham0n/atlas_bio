@@ -12,7 +12,7 @@
         android:background="@color/color_cobalt_blue">
 
         <TextView
-            android:layout_width="349dp"
+            android:layout_width="287dp"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Campagne"
@@ -22,7 +22,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo_user"/>
+            android:src="@drawable/logo_user" />
 
     </LinearLayout>
 

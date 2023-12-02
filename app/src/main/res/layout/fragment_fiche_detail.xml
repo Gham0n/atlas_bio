@@ -43,7 +43,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/imageDetails"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/imageDetails"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
 
@@ -55,7 +55,7 @@
         android:text="Coordonnées : 13232515"
         app:layout_constraintTop_toBottomOf="@+id/textViewHeure"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/imageDetails"
+        app:layout_constraintStart_toStartOf="parent"
      />
 
     <TextView
@@ -65,7 +65,7 @@
         android:text="Date : 14 juillet"
         app:layout_constraintTop_toBottomOf="@+id/textViewCoordonnees"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/imageDetails"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textViewLieu"
@@ -74,16 +74,18 @@
         android:text="Lieu :"
         app:layout_constraintTop_toBottomOf="@+id/textViewDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/imageDetails"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textViewObservation"
         android:layout_width="343dp"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:text="Observation :"
         app:layout_constraintTop_toBottomOf="@+id/textViewLieu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/imageDetails"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="32dp"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

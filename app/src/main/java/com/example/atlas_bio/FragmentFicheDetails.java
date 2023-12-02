@@ -26,6 +26,8 @@ public class FragmentFicheDetails extends Fragment {
             String heure = bundle.getString("heure", "");
             String lieu = bundle.getString("lieu", "");
             String observation = bundle.getString("observation", "");
+            String imageUrl = bundle.getString("imageUrl");
+            if (imageUrl.isEmpty())imageUrl = "error";
 
             // Récupérez les TextViews du layout.
             TextView title = view.findViewById(R.id.textView);
@@ -37,7 +39,7 @@ public class FragmentFicheDetails extends Fragment {
             ImageView imageView = view.findViewById(R.id.imageDetails);
 
             title.setText(espece);
-            Picasso.get().load(bundle.getString("imageUrl")).error(R.drawable.pokemon).into(imageView);
+            Picasso.get().load(imageUrl).error(R.drawable.pokemon).into(imageView);
             coordonneesTextView.setText("Coordonnées GPS : " + coordonnees);
             dateTextView.setText("Date : " + date);
             heureTextView.setText("Heure : " + heure);
