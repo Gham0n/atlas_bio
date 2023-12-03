@@ -42,6 +42,8 @@ public class AddFicheFragment extends Fragment {
     private EditText editTextEspece, editTextDate, editTextHeure, editTextLieu, editTextObservation, editTextCoordGPS, editTextImageUrl;
     private Button buttonAjouterFiche, button_return;
 
+    private String espece;
+
     private ImageButton btn_add_pic;
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -72,7 +74,7 @@ public class AddFicheFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(editTextEspece.getText().toString().trim())) {
-                    String espece = editTextEspece.getText().toString().trim();
+                    espece = editTextEspece.getText().toString().trim();
                     String date = editTextDate.getText().toString().trim();
                     String heure = editTextHeure.getText().toString().trim();
                     String lieu = editTextLieu.getText().toString().trim();
@@ -160,7 +162,7 @@ public class AddFicheFragment extends Fragment {
 
     private void uploadImage(Uri imageUri) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("images").child("uploaded_image.jpg");
+        StorageReference storageRef = storage.getReference().child("images").child(espece+".jpg");
 
         ProgressDialog progressDialog = new ProgressDialog(requireContext());
         progressDialog.setTitle("Téléchargement en cours...");
