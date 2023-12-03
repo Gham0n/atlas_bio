@@ -7,6 +7,10 @@ public class Campagne {
     private String description;
     private String positionGPS;
 
+
+
+    private String idCreator;
+
     public Campagne(String titre, String dateIn, String dateOut, String description, String positionGPS) {
         this.titre = titre;
         this.dateIn = dateIn;
@@ -18,7 +22,13 @@ public class Campagne {
     public Campagne(){};
 
 
+    public String getIdCreator() {
+        return idCreator;
+    }
 
+    public void setIdCreator(String idCreator) {
+        this.idCreator = idCreator;
+    }
 
 
     public String getTitre() {

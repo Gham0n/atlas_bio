@@ -12,19 +12,26 @@
         android:background="@color/color_cobalt_blue">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="287dp"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Campagne"
             android:textColor="@color/black"
             android:textSize="40dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_user" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCampagne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_title"/>
+        android:layout_below="@+id/layout_title"
+        android:layout_marginTop="0dp" />
 
     <Button
         android:id="@+id/btnAddCampagne"

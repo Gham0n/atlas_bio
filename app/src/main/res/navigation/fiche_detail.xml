@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fiche_detail">
+
+    <fragment
+        android:id="@+id/FicheDetail"
+        android:name="com.example.atlas_bio.FragmentFicheDetails"
+        android:label="Fiche Detail Fragment"
+        tools:layout="@layout/fragment_fiche_detail"/>
+
+</navigation>
