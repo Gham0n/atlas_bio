@@ -55,7 +55,7 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 fiches.clear(); // Effacez les données précédentes des fiches
                 for (DataSnapshot ficheSnapshot : dataSnapshot.getChildren()) {
-                    String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
+                    String coordGPS = ficheSnapshot.child("coordoneesGPS").getValue(String.class);
                     fiches.add(coordGPS);
                 }
             }
