@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -28,19 +34,22 @@ import java.io.IOException;
 
 public class FragmentFicheDetails extends Fragment {
     private TextView espèceTextView, coordonnéesTextView, dateTextView, heureTextView, lieuTextView, observationTextView;
-    private RecyclerView recyclerView;
-    private List<String> commentsList = new ArrayList<>();
+    private RecyclerView recyclerViewComments;
+    private List<Comment> commentsList = new ArrayList<>();
     private CommentAdapter commentAdapter;
 
     private Button addCommentButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fiche_detail, container, false);
-        recyclerView = view.findViewById(R.id.recyclerViewComments);
+        recyclerViewComments = view.findViewById(R.id.recyclerViewComments);
         commentAdapter = new CommentAdapter(commentsList);
+        recyclerViewComments.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewComments.setAdapter(commentAdapter);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
+            String nomCampagne = bundle.getString("nomCampagne","");
             String espece = bundle.getString("espece", "");
             String coordonnees = bundle.getString("coordonnees", "");
             String date = bundle.getString("date", "");
@@ -71,9 +80,34 @@ public class FragmentFicheDetails extends Fragment {
             lieuTextView.setText("Lieu : " + lieu);
             observationTextView.setText("Observation : " + observation);
 
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+            String fichePath = "campagnes/" + nomCampagne + "/fiches/" + espece + "/comments";
+
+            databaseReference.child(fichePath).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        commentsList.clear();
+
+                        for (DataSnapshot commentSnapshot : dataSnapshot.getChildren()) {
+                            Comment comment = commentSnapshot.getValue(Comment.class);
+                            commentsList.add(comment);
+                        }
+
+                        commentAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Erreur lors de la récupération des commentaires: " + databaseError.getMessage());
+                }
+            });
+
+
 
         }
-
         // Gestion du bouton d'ajout de commentaire
         addCommentButton = view.findViewById(R.id.button_add_comment);
         addCommentButton.setOnClickListener(new View.OnClickListener() {

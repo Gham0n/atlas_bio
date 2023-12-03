@@ -8,11 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
+// CommentAdapter.java
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
-    private List<String> commentList;
+    private List<Comment> commentList;
 
-    public CommentAdapter(List<String> commentList) {
+    public CommentAdapter(List<Comment> commentList) {
         this.commentList = commentList;
     }
 
@@ -25,8 +26,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        String comment = commentList.get(position);
-        holder.commentText.setText(comment);
+        Comment currentComment = commentList.get(position);
+
+        // Récupérer le texte du commentaire et le nom de l'auteur
+        String commentText = currentComment.getContent();
+        String authorName = currentComment.getAuthor();
+
+        // Définir le texte sur les TextView correspondants
+        holder.commentText.setText(commentText);
+        holder.authorName.setText(authorName);
     }
 
     @Override
