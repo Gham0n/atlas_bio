@@ -68,6 +68,9 @@ public class FragmentFicheDetails extends Fragment {
             TextView observationTextView = view.findViewById(R.id.textViewObservation);
             ImageView imageView = view.findViewById(R.id.imageDetails);
 
+
+            if(imageUrl.isEmpty()) {imageUrl = "R.drawable.pokemon";}
+
             title.setText(espece);
             Picasso.get().load(imageUrl).error(R.drawable.pokemon).into(imageView);
 
