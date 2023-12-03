@@ -75,7 +75,7 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
                         String heure = ficheSnapshot.child("heure").getValue(String.class);
                         String lieu = ficheSnapshot.child("lieu").getValue(String.class);
                         String observation = ficheSnapshot.child("observation").getValue(String.class);
-                        String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
+                        String coordGPS = ficheSnapshot.child("coordoneesGPS").getValue(String.class);
                         String imageUrl = ficheSnapshot.child("imageUrl").getValue(String.class);
 
                         Fiche fiche = new Fiche();
