@@ -1,5 +1,6 @@
 package com.example.atlas_bio;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
 import androidx.cardview.widget.CardView;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,6 +66,13 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
         } else {
             Picasso.get().load(R.drawable.pokemon).into(holder.imageFiche);
         }
+      
+        holder.itemView.setOnLongClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+            Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);
+            return true;
+        });
 
         holder.cardImage.setOnClickListener(new View.OnClickListener() {
             @Override

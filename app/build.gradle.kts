@@ -54,6 +54,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation ("com.google.firebase:firebase-database:20.0.0")
+    implementation ("org.osmdroid:osmdroid-android:6.1.0")
     implementation ("com.google.firebase:firebase-messaging:23.0.0")
     implementation ("com.google.firebase:firebase-storage")
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
