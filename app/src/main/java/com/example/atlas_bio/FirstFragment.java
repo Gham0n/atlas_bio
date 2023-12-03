@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
     private List<Campagne> campagnes;
 
     private Button btn_add_campagne;
+    private ImageButton userButton;
 
     String TAG = "GUI";
 
@@ -84,7 +86,14 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
         campagneAdapter = new CampagneAdapter(campagnes, this);
         recyclerView.setAdapter(campagneAdapter);
 
-
+        userButton = view.findViewById(R.id.user_button);
+        userButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.user_profile);
+            }
+        });
 
         btn_add_campagne = view.findViewById(R.id.btnAddCampagne);
         btn_add_campagne.setOnClickListener(new View.OnClickListener() {
