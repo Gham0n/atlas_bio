@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +24,14 @@ import org.osmdroid.library.BuildConfig;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.io.File;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MapFicheFragment extends Fragment {
+public class MapFicheFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int REQUEST_CODE_PERMISSION = 1;
     String coordonneeGPS;
@@ -42,6 +45,11 @@ public class MapFicheFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Context ctx = getContext().getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
     }
 
     @Override
@@ -62,15 +70,17 @@ public class MapFicheFragment extends Fragment {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.INTERNET,
-                Manifest.permission.READ_MEDIA_IMAGES
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE
         };
 
         if (!checkMultiplePermissions(requireContext(),permissions)) {
             ActivityCompat.requestPermissions(requireActivity(), permissions, REQUEST_CODE_PERMISSION);
+            initStorage();
         } else {
 
             Configuration.getInstance().setDebugMode(true);
-            initializeMap();
+            initStorage();
 
         }
         return view;
@@ -88,6 +98,10 @@ public class MapFicheFragment extends Fragment {
         mapController.setZoom(9.5);
         setCoordonnee();
         GeoPoint startPoint = new GeoPoint(latitude, longitude);
+        Marker point = new Marker(map);
+        point.setPosition(startPoint);
+        point.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        map.getOverlays().add(point);
         mapController.setCenter(startPoint);
     }
 
@@ -107,7 +121,7 @@ public class MapFicheFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean isPerm = (grantResults[0] == 1 && grantResults[2] == 1) && (grantResults[1] == 1 || grantResults[3] == 1);
+        boolean isPerm = (grantResults[0] == 1 && grantResults[2] == 1) && (grantResults[1] == 1 || grantResults[3] == 1 || grantResults[4] == 1) ;
 
         /*if (requestCode == REQUEST_CODE_PERMISSION) {
             if(grantResults.length > 0) {
@@ -134,7 +148,7 @@ public class MapFicheFragment extends Fragment {
             if (!osmdroidTilesDirectory.exists()) {
                 osmdroidTilesDirectory.mkdir();
             }*/
-            initializeMap();
+            initStorage();
         }
     }
 
@@ -145,6 +159,16 @@ public class MapFicheFragment extends Fragment {
             }
         }
         return true;
+    }
+
+    public void initStorage() {
+        org.osmdroid.config.IConfigurationProvider osmConf = org.osmdroid.config.Configuration.getInstance();
+        File basePath = new File(Environment.getStorageDirectory(), "osmdroid");
+        osmConf.setOsmdroidBasePath(basePath);
+        File tileCache = new File(osmConf.getOsmdroidBasePath().getAbsolutePath(), "tiles");
+        osmConf.setOsmdroidTileCache(tileCache);
+
+        initializeMap();
     }
 
 
