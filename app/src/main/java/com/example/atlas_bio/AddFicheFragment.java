@@ -85,9 +85,8 @@ public class AddFicheFragment extends Fragment {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     String userId = user.getUid();
 
-                    Fiche fiche = new Fiche();
+                    Fiche fiche = new Fiche(espece);
 
-                    fiche.setEspece(espece);
                     fiche.setObservation(observation);
                     fiche.setLieu(lieu);
                     fiche.setDate(date);
