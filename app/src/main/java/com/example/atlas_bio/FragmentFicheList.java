@@ -88,6 +88,7 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
                         fiche.setObservation(observation);
                         fiche.setCoordoneesGPS(coordGPS);
                         fiche.setImageUrl(imageUrl);
+                        fiche.setIdCreator(nomCampagne);
 
                         fiches.add(fiche);
                     }

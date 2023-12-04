@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.cardview.widget.CardView;
@@ -68,10 +69,25 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
         }
       
         holder.itemView.setOnLongClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
-            Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);
-            return true;
+            if(fiche.getCoordoneesGPS() != null && !fiche.getCoordoneesGPS().isEmpty()) {
+                Bundle bundle = new Bundle();
+                bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+                bundle.putString("nomCampagne", fiche.getIdCreator());
+                bundle.putString("espece", fiche.getEspece());
+                bundle.putString("coordonnees", fiche.getCoordoneesGPS());
+                bundle.putString("date", fiche.getDate());
+                bundle.putString("heure", fiche.getHeure());
+                bundle.putString("lieu", fiche.getLieu());
+                bundle.putString("observation", fiche.getObservation());
+                bundle.putString("imageUrl", fiche.getImageUrl());
+                Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);
+                return true;
+            }
+            else {
+                Toast msg = Toast.makeText(v.getContext().getApplicationContext(),R.string.error_fiche_gps,Toast.LENGTH_SHORT);
+                msg.show();
+                return false;
+            }
         });
 
         holder.cardImage.setOnClickListener(new View.OnClickListener() {
