@@ -36,6 +36,8 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
 
     private Button btn_add_fiche;
 
+    private Button buttonReturn;
+
     String TAG = "GUI";
 
     @Override
@@ -116,6 +118,17 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
 
                     NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
                     navController.navigate(R.id.addFiche, bundle);
+                }
+            });
+
+            buttonReturn = view.findViewById(R.id.btn_retour);
+            buttonReturn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.first_fragment, bundle);
                 }
             });
         } else {

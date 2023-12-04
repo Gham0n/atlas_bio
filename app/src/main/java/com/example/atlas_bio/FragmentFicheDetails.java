@@ -39,6 +39,8 @@ public class FragmentFicheDetails extends Fragment {
     private CommentAdapter commentAdapter;
 
     private Button addCommentButton;
+
+    private Button buttonReturn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fiche_detail, container, false);
@@ -120,6 +122,17 @@ public class FragmentFicheDetails extends Fragment {
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
                 navController.navigate(R.id.ficheDetailToAddComment,bundle);
 
+            }
+        });
+
+        buttonReturn = view.findViewById(R.id.btn_retour);
+        buttonReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.first_fragment, bundle);
             }
         });
         return view;
