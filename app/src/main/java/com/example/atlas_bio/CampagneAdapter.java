@@ -1,11 +1,13 @@
 package com.example.atlas_bio;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,8 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
 
     String TAG = "GUI";
 
+    Context ctx;
+
     public CampagneAdapter(List<Campagne> campagnes, OnCampagneClickListener listener) {
         this.campagnes = campagnes;
         this.campagneClickListener = listener;
@@ -30,6 +34,7 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
     @Override
     public CampagneViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_campagne, parent, false);
+        ctx = parent.getContext().getApplicationContext();
         return new CampagneViewHolder(view);
     }
 
@@ -48,15 +53,43 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
         String campagneId = campagne.getTitre();
         DatabaseReference campagneRef = database.getReference("campagnes").child(campagneId).child("fiches");
 
-        List<String> fiches = new ArrayList<>();
+        //List<String> fiches = new ArrayList<>();
+
+        Bundle fiches = new Bundle();
+
 
         campagneRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 fiches.clear(); // Effacez les données précédentes des fiches
                 for (DataSnapshot ficheSnapshot : dataSnapshot.getChildren()) {
+                    int i = 0;
+                    String espece = ficheSnapshot.child("espece").getValue(String.class);
+                    String date = ficheSnapshot.child("date").getValue(String.class);
+                    String heure = ficheSnapshot.child("heure").getValue(String.class);
+                    String lieu = ficheSnapshot.child("lieu").getValue(String.class);
+                    String observation = ficheSnapshot.child("observation").getValue(String.class);
                     String coordGPS = ficheSnapshot.child("coordoneesGPS").getValue(String.class);
-                    fiches.add(coordGPS);
+                    String imageUrl = ficheSnapshot.child("imageUrl").getValue(String.class);
+                    if (imageUrl.isEmpty())imageUrl = "error";
+
+                    Bundle fiche = new Bundle();
+                    fiche.putString("coordonneeGPS", coordGPS);
+                    fiche.putString("nomCampagne", "");
+                    fiche.putString("espece", espece);
+                    fiche.putString("coordonnees", coordGPS);
+                    fiche.putString("date", date);
+                    fiche.putString("heure", heure);
+                    fiche.putString("lieu", lieu);
+                    fiche.putString("observation", observation);
+                    fiche.putString("imageUrl", imageUrl);
+
+                    fiches.putBundle("fiche"+i,fiche);
+                    i++;
+                }
+                if(fiches.isEmpty()) {
+                    Toast msg = Toast.makeText(ctx,R.string.error_campagne_gps,Toast.LENGTH_SHORT);
+                    msg.show();
                 }
             }
 
@@ -80,7 +113,8 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
 
         holder.itemView.setOnLongClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putStringArrayList("coordonneeGPS", (ArrayList<String>) fiches);
+            //bundle.putStringArrayList("coordonneeGPS", (ArrayList<Bundle>) fiches);
+            bundle.putBundle("fiches",fiches);
             Navigation.findNavController(v).navigate(R.id.campagneToMap,bundle);
             return true;
         });

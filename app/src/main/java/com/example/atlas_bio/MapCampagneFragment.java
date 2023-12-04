@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import org.jetbrains.annotations.NotNull;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -46,6 +47,10 @@ public class MapCampagneFragment extends Fragment implements ActivityCompat.OnRe
     ArrayList<Float> latitude;
 
     MapView map;
+
+    Fiche fiche;
+
+    List<Fiche> fiches;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -180,6 +185,7 @@ public class MapCampagneFragment extends Fragment implements ActivityCompat.OnRe
     }
 
     public void setMarker(IMapController mapController) {
+        Bundle fiches = getArguments();
         for(int i = 0; i < this.latitude.size(); i++) {
             GeoPoint startPoint = new GeoPoint(latitude.get(i), longitude.get(i));
             Marker point = new Marker(map);
@@ -189,6 +195,48 @@ public class MapCampagneFragment extends Fragment implements ActivityCompat.OnRe
             if(i == 0) {
                 mapController.setCenter(startPoint);
             }
+
+
+            Bundle ficheBundle = fiches.getBundle("fiche"+i);
+            if (ficheBundle != null) {
+                String nomCampagne = ficheBundle.getString("nomCampagne", "");
+                String espece = ficheBundle.getString("espece", "");
+                String coordonnees = ficheBundle.getString("coordonnees", "");
+                String date = ficheBundle.getString("date", "");
+                String heure = ficheBundle.getString("heure", "");
+                String lieu = ficheBundle.getString("lieu", "");
+                String observation = ficheBundle.getString("observation", "");
+                String imageUrl = ficheBundle.getString("imageUrl");
+                if (imageUrl.isEmpty()) imageUrl = "error"; // for fix bug
+
+                fiche = new Fiche(espece);
+                fiche.setCoordoneesGPS(coordonnees);
+                fiche.setDate(date);
+                fiche.setHeure(heure);
+                fiche.setLieu(lieu);
+                fiche.setObservation(observation);
+                fiche.setImageUrl(imageUrl);
+
+                this.fiches.add(fiche);
+            }
+
+            point.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker, MapView mapView) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+                    bundle.putString("nomCampagne", "");
+                    bundle.putString("espece", fiche.getEspece());
+                    bundle.putString("coordonnees", fiche.getCoordoneesGPS());
+                    bundle.putString("date", fiche.getDate());
+                    bundle.putString("heure", fiche.getHeure());
+                    bundle.putString("lieu", fiche.getLieu());
+                    bundle.putString("observation", fiche.getObservation());
+                    bundle.putString("imageUrl", fiche.getImageUrl());
+                    Navigation.findNavController(mapView).navigate(R.id.ficheList_To_FicheDetail,bundle);
+                    return false;
+                }
+            });
         }
 
     }

@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import org.jetbrains.annotations.NotNull;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -42,6 +43,8 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
 
     MapView map;
 
+    Fiche fiche;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,27 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
 
         Context ctx = getContext().getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String nomCampagne = bundle.getString("nomCampagne", "");
+            String espece = bundle.getString("espece", "");
+            String coordonnees = bundle.getString("coordonnees", "");
+            String date = bundle.getString("date", "");
+            String heure = bundle.getString("heure", "");
+            String lieu = bundle.getString("lieu", "");
+            String observation = bundle.getString("observation", "");
+            String imageUrl = bundle.getString("imageUrl");
+            if (imageUrl.isEmpty()) imageUrl = "error"; // for fix bug
+
+            fiche = new Fiche(espece);
+            fiche.setCoordoneesGPS(coordonnees);
+            fiche.setDate(date);
+            fiche.setHeure(heure);
+            fiche.setLieu(lieu);
+            fiche.setObservation(observation);
+            fiche.setImageUrl(imageUrl);
+        }
     }
 
     @Override
@@ -103,6 +127,24 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
         point.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         map.getOverlays().add(point);
         mapController.setCenter(startPoint);
+
+        point.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker, MapView mapView) {
+                Bundle bundle = new Bundle();
+                bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+                bundle.putString("nomCampagne", "");
+                bundle.putString("espece", fiche.getEspece());
+                bundle.putString("coordonnees", fiche.getCoordoneesGPS());
+                bundle.putString("date", fiche.getDate());
+                bundle.putString("heure", fiche.getHeure());
+                bundle.putString("lieu", fiche.getLieu());
+                bundle.putString("observation", fiche.getObservation());
+                bundle.putString("imageUrl", fiche.getImageUrl());
+                Navigation.findNavController(mapView).navigate(R.id.ficheList_To_FicheDetail,bundle);
+                return false;
+            }
+        });
     }
 
     private void setCoordonnee() {
