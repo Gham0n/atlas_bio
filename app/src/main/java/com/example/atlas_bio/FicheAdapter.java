@@ -69,7 +69,7 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
         }
       
         holder.itemView.setOnLongClickListener(v -> {
-            if(fiche.getCoordoneesGPS() != null) {
+            if(fiche.getCoordoneesGPS() != null && !fiche.getCoordoneesGPS().isEmpty()) {
                 Bundle bundle = new Bundle();
                 bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
                 Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);

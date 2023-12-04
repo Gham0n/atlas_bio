@@ -58,13 +58,13 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
         if (bundle != null) {
             String nomCampagne = bundle.getString("nomCampagne", "");
             String espece = bundle.getString("espece", "");
-            String coordonnees = bundle.getString("coordonnees", "");
+            String coordonnees = bundle.getString("coordonneeGPS", "");
             String date = bundle.getString("date", "");
             String heure = bundle.getString("heure", "");
             String lieu = bundle.getString("lieu", "");
             String observation = bundle.getString("observation", "");
             String imageUrl = bundle.getString("imageUrl");
-            if (imageUrl.isEmpty()) imageUrl = "error"; // for fix bug
+            if (imageUrl == null) imageUrl = "error"; // for fix bug
 
             fiche = new Fiche(espece);
             fiche.setCoordoneesGPS(coordonnees);

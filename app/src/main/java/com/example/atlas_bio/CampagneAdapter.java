@@ -62,8 +62,8 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 fiches.clear(); // Effacez les données précédentes des fiches
+                int i = 0;
                 for (DataSnapshot ficheSnapshot : dataSnapshot.getChildren()) {
-                    int i = 0;
                     String espece = ficheSnapshot.child("espece").getValue(String.class);
                     String date = ficheSnapshot.child("date").getValue(String.class);
                     String heure = ficheSnapshot.child("heure").getValue(String.class);
@@ -112,10 +112,10 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
         });
 
         holder.itemView.setOnLongClickListener(v -> {
-            Bundle bundle = new Bundle();
+            //Bundle bundle = new Bundle();
             //bundle.putStringArrayList("coordonneeGPS", (ArrayList<Bundle>) fiches);
-            bundle.putBundle("fiches",fiches);
-            Navigation.findNavController(v).navigate(R.id.campagneToMap,bundle);
+            //bundle.putBundle("fiches",fiches);
+            Navigation.findNavController(v).navigate(R.id.campagneToMap,fiches);
             return true;
         });
 
