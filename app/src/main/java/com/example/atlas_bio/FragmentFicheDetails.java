@@ -41,6 +41,8 @@ public class FragmentFicheDetails extends Fragment {
     private Button addCommentButton;
 
     private Button buttonReturn;
+
+    private Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fiche_detail, container, false);
@@ -49,7 +51,7 @@ public class FragmentFicheDetails extends Fragment {
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewComments.setAdapter(commentAdapter);
 
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         if (bundle != null) {
             String nomCampagne = bundle.getString("nomCampagne","");
             String espece = bundle.getString("espece", "");
@@ -129,10 +131,9 @@ public class FragmentFicheDetails extends Fragment {
         buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
 
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.first_fragment, bundle);
+                navController.navigate(R.id.FicheListFragment, bundle);
             }
         });
         return view;
