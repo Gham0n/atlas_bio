@@ -72,6 +72,14 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
             if(fiche.getCoordoneesGPS() != null && !fiche.getCoordoneesGPS().isEmpty()) {
                 Bundle bundle = new Bundle();
                 bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+                bundle.putString("nomCampagne", fiche.getIdCreator());
+                bundle.putString("espece", fiche.getEspece());
+                bundle.putString("coordonnees", fiche.getCoordoneesGPS());
+                bundle.putString("date", fiche.getDate());
+                bundle.putString("heure", fiche.getHeure());
+                bundle.putString("lieu", fiche.getLieu());
+                bundle.putString("observation", fiche.getObservation());
+                bundle.putString("imageUrl", fiche.getImageUrl());
                 Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);
                 return true;
             }

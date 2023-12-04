@@ -45,6 +45,8 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
 
     Fiche fiche;
 
+    String nomCampagne;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String nomCampagne = bundle.getString("nomCampagne", "");
+            nomCampagne = bundle.getString("nomCampagne", "");
             String espece = bundle.getString("espece", "");
             String coordonnees = bundle.getString("coordonneeGPS", "");
             String date = bundle.getString("date", "");
@@ -64,7 +66,7 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
             String lieu = bundle.getString("lieu", "");
             String observation = bundle.getString("observation", "");
             String imageUrl = bundle.getString("imageUrl");
-            if (imageUrl == null) imageUrl = "error"; // for fix bug
+            if (imageUrl == null || imageUrl.isEmpty()) imageUrl = "error"; // for fix bug
 
             fiche = new Fiche(espece);
             fiche.setCoordoneesGPS(coordonnees);
@@ -133,7 +135,7 @@ public class MapFicheFragment extends Fragment implements ActivityCompat.OnReque
             public boolean onMarkerClick(Marker marker, MapView mapView) {
                 Bundle bundle = new Bundle();
                 bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
-                bundle.putString("nomCampagne", "");
+                bundle.putString("nomCampagne", nomCampagne);
                 bundle.putString("espece", fiche.getEspece());
                 bundle.putString("coordonnees", fiche.getCoordoneesGPS());
                 bundle.putString("date", fiche.getDate());

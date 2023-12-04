@@ -75,7 +75,7 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
 
                     Bundle fiche = new Bundle();
                     fiche.putString("coordonneeGPS", coordGPS);
-                    fiche.putString("nomCampagne", "");
+                    fiche.putString("nomCampagne", campagne.getTitre());
                     fiche.putString("espece", espece);
                     fiche.putString("coordonnees", coordGPS);
                     fiche.putString("date", date);
