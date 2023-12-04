@@ -161,6 +161,7 @@ public class AddFicheFragment extends Fragment {
 
     private void uploadImage(Uri imageUri) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
+        espece = editTextEspece.getText().toString().trim();
         StorageReference storageRef = storage.getReference().child("images").child(espece+".jpg");
 
         ProgressDialog progressDialog = new ProgressDialog(requireContext());
