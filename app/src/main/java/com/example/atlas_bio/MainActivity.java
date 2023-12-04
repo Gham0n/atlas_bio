@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.atlas_bio.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,26 @@ public class MainActivity extends AppCompatActivity {
 
         // Appel de la méthode pour obtenir le token FCM
         getFCMToken();
+
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.user_profile);
+            }
+        });
+        disableFab();
+    }
+
+    public void disableFab() {
+        fab.setVisibility(View.GONE);
+        fab.setEnabled(false);
+    }
+
+    public void enableFab() {
+        fab.setVisibility(View.VISIBLE);
+        fab.setEnabled(true);
     }
 
     @Override
