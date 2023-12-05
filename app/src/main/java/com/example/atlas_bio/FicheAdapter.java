@@ -1,5 +1,6 @@
 package com.example.atlas_bio;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+
 import androidx.cardview.widget.CardView;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,6 +67,28 @@ public class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.FicheViewHol
         } else {
             Picasso.get().load(R.drawable.pokemon).into(holder.imageFiche);
         }
+      
+        holder.itemView.setOnLongClickListener(v -> {
+            if(fiche.getCoordoneesGPS() != null && !fiche.getCoordoneesGPS().isEmpty()) {
+                Bundle bundle = new Bundle();
+                bundle.putString("coordonneeGPS", fiche.getCoordoneesGPS());
+                bundle.putString("nomCampagne", fiche.getIdCreator());
+                bundle.putString("espece", fiche.getEspece());
+                bundle.putString("coordonnees", fiche.getCoordoneesGPS());
+                bundle.putString("date", fiche.getDate());
+                bundle.putString("heure", fiche.getHeure());
+                bundle.putString("lieu", fiche.getLieu());
+                bundle.putString("observation", fiche.getObservation());
+                bundle.putString("imageUrl", fiche.getImageUrl());
+                Navigation.findNavController(v).navigate(R.id.ficheToMap,bundle);
+                return true;
+            }
+            else {
+                Toast msg = Toast.makeText(v.getContext().getApplicationContext(),R.string.error_fiche_gps,Toast.LENGTH_SHORT);
+                msg.show();
+                return false;
+            }
+        });
 
         holder.cardImage.setOnClickListener(new View.OnClickListener() {
             @Override

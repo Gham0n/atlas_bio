@@ -7,6 +7,13 @@
 
 
     <TextView
+        android:id="@+id/textViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:background="@color/color_emerald_green" />
+
+    <TextView
         android:id="@+id/titreFicheList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,13 +22,22 @@
         android:textColor="@color/black"
         android:textSize="25dp"
         android:background="@color/color_emerald_green"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@id/textViewEmpty"/>
+
+
+    <Button
+        android:id="@+id/btn_retour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titreFicheList"
+        android:layout_margin="8dp"
+        android:text="Retour" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFiche"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titreFicheList"
+        android:layout_below="@id/btn_retour"
         />
 
     <Button

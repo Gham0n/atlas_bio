@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@color/color_cobalt_blue" />
+  
     <LinearLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
@@ -12,7 +19,7 @@
         android:background="@color/color_cobalt_blue"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-
+        android:layout_below="@id/textViewEmpty"
 
         <TextView
             android:layout_width="287dp"

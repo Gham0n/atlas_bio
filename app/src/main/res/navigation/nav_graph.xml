@@ -29,6 +29,10 @@
         android:name="com.example.atlas_bio.FragmentFicheList"
         android:label="Fiche List Fragment"
         tools:layout="@layout/fragment_fiche_list"/>
+    <action
+        android:id="@+id/ficheList_To_FicheDetail"
+        app:destination="@id/fiche_detail"
+        />
 
     <action
         android:id="@+id/campagneToAddCampagne"
@@ -40,6 +44,7 @@
         android:label="addCampagne"
         tools:layout="@layout/add_camapgne"
         />
+
     <action
         android:id="@+id/ficheToAddFiche"
         app:destination="@id/addFiche"/>
@@ -50,7 +55,10 @@
         android:label="addFiche"
         tools:layout="@layout/add_fiche"
         />
-  
+
+
+
+
     <fragment
         android:id="@+id/user_profile"
         android:name="com.example.atlas_bio.UserProfile"
@@ -67,15 +75,45 @@
         tools:layout="@layout/dialog_image_preview"/>
 
     <fragment
+        android:id="@+id/MapFicheFragment"
+        android:name="com.example.atlas_bio.MapFicheFragment"
+        android:label="mapFiche"
+        tools:layout="@layout/map_fiche_fragment"
+    />
+    <action
+        android:id="@+id/ficheToMap"
+        app:destination="@id/MapFicheFragment"
+    />
+
+    <fragment
+            android:id="@+id/MapCampagneFragment"
+            android:name="com.example.atlas_bio.MapCampagneFragment"
+            android:label="mapCampagne"
+            tools:layout="@layout/map_fiche_fragment"
+    />
+    <action
+            android:id="@+id/campagneToMap"
+            app:destination="@id/MapCampagneFragment"
+    />
+
+    <fragment
         android:id="@+id/fiche_detail"
         android:name="com.example.atlas_bio.FragmentFicheDetails"
         android:label="FicheDetailFragment"
         tools:layout="@layout/fragment_fiche_detail"
         />
     <action
-        android:id="@+id/ficheList_To_FicheDetail"
-        app:destination="@id/fiche_detail"
-    />
+        android:id="@+id/ficheDetailToAddComment"
+        app:destination="@id/addComment"/>
+
+
+    <fragment
+        android:id="@+id/addComment"
+        android:name="com.example.atlas_bio.AjoutCommentFragment"
+        android:label="addComment"
+        tools:layout="@layout/add_comment"
+        />
+
 
 
 </navigation>

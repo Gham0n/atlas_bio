@@ -36,6 +36,8 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
 
     private Button btn_add_fiche;
 
+    private Button buttonReturn;
+
     String TAG = "GUI";
 
     @Override
@@ -75,7 +77,7 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
                         String heure = ficheSnapshot.child("heure").getValue(String.class);
                         String lieu = ficheSnapshot.child("lieu").getValue(String.class);
                         String observation = ficheSnapshot.child("observation").getValue(String.class);
-                        String coordGPS = ficheSnapshot.child("coordGPS").getValue(String.class);
+                        String coordGPS = ficheSnapshot.child("coordoneesGPS").getValue(String.class);
                         String imageUrl = ficheSnapshot.child("imageUrl").getValue(String.class);
 
                         Fiche fiche = new Fiche();
@@ -86,6 +88,7 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
                         fiche.setObservation(observation);
                         fiche.setCoordoneesGPS(coordGPS);
                         fiche.setImageUrl(imageUrl);
+                        fiche.setIdCreator(nomCampagne);
 
                         fiches.add(fiche);
                     }
@@ -118,6 +121,17 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
                     navController.navigate(R.id.addFiche, bundle);
                 }
             });
+
+            buttonReturn = view.findViewById(R.id.btn_retour);
+            buttonReturn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                    navController.navigate(R.id.first_fragment, bundle);
+                }
+            });
         } else {
             Log.e(TAG, "Nom de la campagne est nul ou vide");
         }
@@ -126,10 +140,10 @@ public class FragmentFicheList extends Fragment implements FicheAdapter.OnItemCl
             public void onItemClick(View view, int position) {
                 // Lorsque l'élément de la liste est cliqué, affichez les détails de la fiche dans un nouveau fragment.
                 Fiche selectedFiche = fiches.get(position);
-                FragmentFicheDetails fragmentFicheDetail = new FragmentFicheDetails();
 
                 // Transmettez les détails de la fiche au fragment de détails.
                 Bundle bundle = new Bundle();
+                bundle.putString("nomCampagne", nomCampagne);
                 bundle.putString("espece", selectedFiche.getEspece());
                 bundle.putString("coordonnees", selectedFiche.getCoordoneesGPS());
                 bundle.putString("date", selectedFiche.getDate());
