@@ -12,8 +12,8 @@
     <string name="lorem_ipsum">JE SUIS UN LONG TEXT EN LATIN</string>
     <string name="background_image">Background image</string>
 
-    <string name="error_fiche_gps">cette fiche ne contient pas de coordonnées GPS valides</string>
-    <string name="error_campagne_gps">cette campagne comporte des coordonnées GPS invalides</string>
+    <string name="error_fiche_gps">Cette fiche ne contient pas de coordonnées GPS valides</string>
+    <string name="error_campagne_gps">Cette campagne comporte des coordonnées GPS invalides</string>
 
 
 </resources>
