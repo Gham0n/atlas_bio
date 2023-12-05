@@ -46,8 +46,12 @@ public class UserProfile extends Fragment implements CampagneAdapter.OnCampagneC
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
+        disableFab();
         super.onCreate(savedInstanceState);
+    }
+
+    private void disableFab() {
+        ((MainActivity) requireActivity()).disableFab();
     }
 
     @Nullable

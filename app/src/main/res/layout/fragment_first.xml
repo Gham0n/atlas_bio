@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/textViewEmpty"
@@ -11,13 +11,15 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:background="@color/color_cobalt_blue" />
-
+  
     <LinearLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_cobalt_blue"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         android:layout_below="@id/textViewEmpty"
-        android:background="@color/color_cobalt_blue">
 
         <TextView
             android:layout_width="287dp"
@@ -27,10 +29,16 @@
             android:textColor="@color/black"
             android:textSize="40dp" />
 
+       <!-- Bouton fixe pour se rendre dans user Profile
+
         <ImageButton
+            android:id="@+id/user_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo_user" />
+            android:src="@drawable/logo_user"
+            android:background="@android:color/transparent"/>-->
+
+
 
     </LinearLayout>
 
