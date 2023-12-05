@@ -90,6 +90,8 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
         campagneAdapter = new CampagneAdapter(campagnes, this);
         recyclerView.setAdapter(campagneAdapter);
 
+        /* Bouton fixe pour se rendre dans User profile
+
         userButton = view.findViewById(R.id.user_button);
         userButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +99,7 @@ public class FirstFragment extends Fragment implements CampagneAdapter.OnCampagn
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
                 navController.navigate(R.id.user_profile);
             }
-        });
+        });*/
 
         btn_add_campagne = view.findViewById(R.id.btnAddCampagne);
         btn_add_campagne.setOnClickListener(new View.OnClickListener() {

@@ -22,12 +22,14 @@
             android:textColor="@color/black"
             android:textSize="40dp" />
 
+       <!-- Bouton fixe pour se rendre dans user Profile
+
         <ImageButton
             android:id="@+id/user_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logo_user"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"/>-->
 
 
 
