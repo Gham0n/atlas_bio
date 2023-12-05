@@ -30,6 +30,11 @@ en ville, en périphérie ou à la campagne.
 ## Utilisation
 Minimum version "8.1.2"
 
+## Présentations & Démo
+
+- Présentation: https://uniren1-my.sharepoint.com/:v:/g/personal/guillaume_hamon_1_etudiant_univ-rennes1_fr/EXXtsRJFyvdNt5_GSPXzdeoB7zzY8sQHPohwh1JxeWPXoQ?e=EwIzme
+- Démo: https://uniren1-my.sharepoint.com/:v:/g/personal/guillaume_hamon_1_etudiant_univ-rennes1_fr/EUJtSGvIFLpFu6744xoow0wBYbuSsrbMygwexN2mPS-43w?e=VRG31F
+
 ## Contributeurs
 - [Hamon Guillaume](https://github.com/Gham0n/tpjpa2023)
 - [Léo Nolière](https://github.com/LeoNoliere)
