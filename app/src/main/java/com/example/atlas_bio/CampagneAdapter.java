@@ -16,7 +16,7 @@ import com.google.firebase.database.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.CampagneViewHolder> {
+public class    CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.CampagneViewHolder> {
 
     private List<Campagne> campagnes;
     private OnCampagneClickListener campagneClickListener;
