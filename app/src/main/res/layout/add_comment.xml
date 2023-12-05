@@ -6,15 +6,21 @@ android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:id="@+id/big_layout">
 
+    <TextView
+        android:id="@+id/textViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 <Button
     android:id="@+id/btn_retour"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Retour"
-    android:layout_marginTop="20dp"
     android:layout_marginLeft="8dp"
-    app:layout_constraintTop_toTopOf="@id/big_layout"
+    app:layout_constraintTop_toBottomOf="@id/textViewEmpty"
     app:layout_constraintStart_toStartOf="@id/big_layout"/>
 
 <LinearLayout

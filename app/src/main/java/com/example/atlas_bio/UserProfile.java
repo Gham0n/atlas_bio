@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,17 @@ public class UserProfile extends Fragment implements CampagneAdapter.OnCampagneC
         TextView email = view.findViewById(R.id.userProfile_email);
 
         email.setText(firebaseUser.getEmail());
+
+        ImageButton btn_logout = view.findViewById(R.id.btn_logout);
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.auth);
+            }
+        });
 
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("users");
         Query query = databaseRef.orderByChild("email").equalTo(firebaseUser.getEmail());
@@ -189,6 +201,7 @@ public class UserProfile extends Fragment implements CampagneAdapter.OnCampagneC
 
                     }
                 }));
+
 
             }
 
