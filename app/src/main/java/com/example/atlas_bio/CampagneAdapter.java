@@ -115,7 +115,19 @@ public class CampagneAdapter extends RecyclerView.Adapter<CampagneAdapter.Campag
             //Bundle bundle = new Bundle();
             //bundle.putStringArrayList("coordonneeGPS", (ArrayList<Bundle>) fiches);
             //bundle.putBundle("fiches",fiches);
-            Navigation.findNavController(v).navigate(R.id.campagneToMap,fiches);
+            boolean isMappable = false;
+
+            for(int i = 0; i < fiches.size(); i++) {
+                String coord = fiches.getBundle("fiche"+i).getString("coordonneeGPS");
+                if(coord != null && !coord.isEmpty()) isMappable = true;
+            }
+
+            if(isMappable) {
+                Navigation.findNavController(v).navigate(R.id.campagneToMap,fiches);
+            } else {
+                Toast msg = Toast.makeText(ctx,R.string.error_campagne_gps,Toast.LENGTH_SHORT);
+                msg.show();
+            }
             return true;
         });
 
