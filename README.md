@@ -7,15 +7,15 @@ des sciences participatives. La réalisation de cet atlas permet d’établir un
 des territoires, en impliquant et en sensibilisant les habitants aux enjeux de la biodiversité, qu’ils soient
 en ville, en périphérie ou à la campagne.
 
-## Captures d'écran
-Screen finaux içi
-
 ## Fonctionnalités
 - Authentification utilisateur
 - Interface intuitive pour voir et participer aux campagnes d'inventaire
 - Saisie de fiches avec coordonnées GPS, date/heure, lieu (via API geocoder), photos et observations textuelles
 - Accès à la liste des fiches d'une campagne et visualisation détaillée
 - Accès à la liste des fiches saisies par l'utilisateur
+- Notifications
+-Visualisation des coordoonées avec openStreetMap
+
 
 ## Prérequis
 - Android Studio installé
@@ -27,14 +27,11 @@ Screen finaux içi
 3. Connectez un émulateur Android ou un appareil physique
 4. Appuyez sur "Run" dans Android Studio pour installer et exécuter l'application
 
-## Configuration
-
-
 ## Utilisation
 Minimum version "8.1.2"
 
 ## Contributeurs
 - [Hamon Guillaume](https://github.com/Gham0n/tpjpa2023)
 - [Léo Nolière](https://github.com/LeoNoliere)
-- [Jordan Fonseka]()
-- [Quentin ]()
+- [Jordan Fonseca]()
+- [Quentin Bigot]()
